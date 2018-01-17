@@ -1,127 +1,104 @@
-///
-/// Solid State by HTML5 UP
-/// html5up.net | @ajlkn
-/// Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-///
-
 /* Menu */
 
-	#page-wrapper {
-		@include vendor('transition', 'filter 0.25s ease');
-	}
+	$accent: accent2;
 
 	#menu {
-		@include vendor('align-items', 'center');
-		@include vendor('display', 'flex');
-		@include vendor('justify-content', 'center');
-		@include vendor('pointer-events', 'none');
-		@include vendor('transition', ('opacity #{_duration(menu)} ease', 'visibility #{_duration(menu)}'));
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		-webkit-tap-highlight-color: rgba(0,0,0,0);
-		background: transparentize(_palette(bg), 0.2);
-		cursor: default;
+		@include color-typography($accent);
+		@include color-button($accent);
+		@include vendor('transform', 'translateX(#{_size(menu-width)})');
+		@include vendor('transition', (
+			'transform #{_duration(menu)} ease',
+			'box-shadow #{_duration(menu)} ease',
+			'visibility #{_duration(menu)}'
+		));
+		-webkit-overflow-scrolling: touch;
+		box-shadow: none;
 		height: 100%;
-		left: 0;
-		opacity: 0;
+		max-width: 80%;
+		overflow-y: auto;
+		padding: 3rem 2rem;
 		position: fixed;
-		text-align: center;
+		right: 0;
 		top: 0;
 		visibility: hidden;
-		width: 100%;
+		width: _size(menu-width);
+		z-index: _misc(z-index-base) + 2;
 
-		.inner {
-			@include padding(2.5em, 1.5em);
-			@include vendor('transform', 'translateY(0.5em)');
-			@include vendor('transition', ('opacity #{_duration(menu)} ease','transform #{_duration(menu)} ease'));
-			-webkit-overflow-scrolling: touch;
-			background: _palette(accent);
-			border-radius: _size(border-radius);
-			display: block;
-			max-width: 100%;
-			opacity: 0;
-			position: relative;
-			width: 18em;
-		}
+		> ul {
+			margin: 0 0 (_size(element-margin) * 0.5) 0;
 
-		h2 {
-			border-bottom: solid 2px _palette(border);
-			padding-bottom: 1em;
-		}
-
-		.close {
-			background-image: url('images/close.svg');
-			background-position: 75% 25%;
-			background-repeat: no-repeat;
-			background-size: 2em 2em;
-			border: 0;
-			content: '';
-			display: block;
-			height: 4em;
-			overflow: hidden;
-			position: absolute;
-			right: 0;
-			text-align: center;
-			text-indent: 4em;
-			top: 0;
-			width: 4em;
-		}
-
-		.links {
-			list-style: none;
-			margin-bottom: (_size(element-margin) - 0.5em);
-			padding: 0;
-
-			li {
+			&.links {
+				list-style: none;
 				padding: 0;
 
-				a {
-					border-radius: _size(border-radius);
-					border: 0;
-					display: block;
-					font-family: _font(family-heading);
-					font-size: 0.8em;
-					font-weight: _font(weight-heading);
-					letter-spacing: _font(kern-heading);
-					line-height: 1.85em;
-					padding: 0.75em 0;
-					text-transform: uppercase;
+				> li {
+					padding: 0;
 
-					&:hover {
-						background: saturate(darken(_palette(accent), 3), 1.5);
+					> a {
+						border: 0;
+						border-top: solid 1px _palette($accent, border);
+						color: inherit;
+						display: block;
+						letter-spacing: _size(letter-spacing-alt);
+						line-height: 3.5rem;
+						text-decoration: none;
+
+						&:hover {
+							color: _palette($accent, fg-bold);
+						}
+					}
+
+					&:first-child {
+						> a {
+							border-top: 0;
+						}
 					}
 				}
 			}
 		}
 
-		@include breakpoint(small) {
-			.inner {
-				max-height: 100%;
-				overflow-y: auto;
-				overflow-x: hidden;
+		.close {
+			@include icon;
+			@include vendor('transition', 'color #{_duration(transition)} ease-in-out');
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			border: 0;
+			color: _palette($accent, fg-light);
+			cursor: pointer;
+			display: block;
+			height: 3.25rem;
+			line-height: 3.25rem;
+			padding-right: 1.25rem;
+			position: absolute;
+			right: 0;
+			text-align: right;
+			top: 0;
+			vertical-align: middle;
+			width: 7rem;
 
-				.close {
-					background-size: 1.5em 1.5em;
-				}
+			&:before {
+				content: '\f00d';
+				font-size: 1.25rem;
 			}
+
+			&:hover {
+				color: _palette($accent, fg-bold);
+			}
+
+			@include breakpoint('<=small') {
+				height: 4rem;
+				line-height: 4rem;
+			}
+		}
+
+		@include breakpoint('<=small') {
+			padding: 2.5rem 1.75rem;
 		}
 	}
 
 	body.is-menu-visible {
-		#page-wrapper {
-			@include vendor('filter', 'blur(1.5px)');
-		}
-
 		#menu {
-			@include vendor('pointer-events', 'auto');
-			opacity: 1;
+			@include vendor('transform', 'translateX(0)');
+			box-shadow: 0 0 1.5rem 0 rgba(0,0,0,0.2);
 			visibility: visible;
-
-			.inner {
-				@include vendor('transform', 'translateY(0)');
-				opacity: 1;
-			}
 		}
 	}

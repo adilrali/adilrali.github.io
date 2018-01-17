@@ -3638,6 +3638,8 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 		text-align: center;
+        width: auto;
+        height: auto; 
 	}
 
 		#main > header h2 {
